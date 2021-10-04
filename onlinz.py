@@ -46,3 +46,13 @@ def calc_volume(height, width, depth):
 name = input("Hello customer, what is your name?").title()
 box_dimensions()
 calc_volume(user_height, user_width, user_depth)
+
+#base rates for shipping
+if volume <= 6000:
+    rate = 8.00
+elif volume > 6000 and volume < 100000:
+    rate = 12.00
+elif volume >= 100000:
+    rate = 15.00
+else:
+    print("Please contact staff")
