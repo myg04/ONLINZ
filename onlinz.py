@@ -2,39 +2,39 @@
 def box_dimensions():
     while True:
         try:
-            global user_height
-            user_height = int(input("Hi {}, What is the height of your return box in cm? " .format(customer_name)))
-            if user_height > 5 and user_height < 100:
+            global customer_height
+            customer_height = int(input("Hi {}, what is the height of your return box in cm? " .format(customer_name)))
+            if customer_height >= 5 and customer_height <= 100:
                 break
             else:
-                print("Please enter your return boxes height between 5 and 100 cm (e.g. 10)")
+                print("Please enter your return boxes height (e.g. 10)\nHeight Requirements: Minimum 5cm - Maximum 100 cm")
         except ValueError:
-            print("Please enter a valid number (e.g. 10)")
+            print("Please enter boxes height in digit format (e.g. 10)")
 
     while True:
         try:
-            global user_width
-            user_width = int(input("{}, What is the width of your return box in cm? " .format(customer_name)))
-            if user_width > 5 and user_width < 100:
+            global customer_width
+            customer_width = int(input("{}, What is the width of your return box in cm? " .format(customer_name)))
+            if customer_width >= 5 and customer_width <= 100:
                 break
             else:
-                print("Please enter your return boxes width between 5 and 100 cm (e.g. 10)")
+                print("Please enter your return boxes width (e.g. 10)\nWidth Requirements: Minimum 5cm - Maximum 100 cm")
         except ValueError:
-            print("Please enter a valid number (e.g. 10)")
+            print("Please enter boxes width in digit format (e.g. 10)")
 
     while True:
             try:
-                global user_depth
-                user_depth = int(input("{}, What is the depth of your return box in cm? " .format(customer_name)))
-                if user_depth > 5 and user_depth < 100:
+                global customer_depth
+                customer_depth = int(input("{}, What is the depth of your return box in cm? " .format(customer_name)))
+                if customer_depth >= 5 and customer_depth <= 100:
                     break
                 else:
-                    print("Please enter your return boxes depth between 5 and 100 cm (e.g. 10)")
+                    print("Please enter your return boxes depth (e.g. 10)\nDepth Requirements: Minimum 5cm - Maximum 100 cm")
             except ValueError:
-                print("Please enter a valid number (e.g. 10)")
-    print("Your return box dimensions are: \nHeight = {}cm \nWidth = {}cm \nDepth = {}cm" .format(user_height, user_width, user_depth))
+                print("Please enter boxes depth in digit format (e.g. 10)")
+    print("Your return box dimensions are: \nHeight = {}cm \nWidth = {}cm \nDepth = {}cm" .format(customer_height, customer_width, customer_depth))
     
-    return user_height, user_width, user_depth
+    return customer_height, customer_width, customer_depth
 
 #calculates the volume of the customers return box and tells them
 def calc_volume(height, width, depth):
@@ -45,22 +45,19 @@ def calc_volume(height, width, depth):
 
 #Asks customer where their returning their item from and tells them how much it will cost
 def final_cost(customer_island):
-    while True:
-        try:
-
-            if customer_island in island_rates:
-                global final_rate
-                final_rate = island_rates[customer_island] * rate
-                print("You are returning an item from {} and it will cost $ {:.2f}".format(customer_island.title(), final_rate))
-                break
-            else:
-                print("Please enter one of the following islands: \nNorth Island / Te Ika a Maui \nSouth Island / Te Wai Pounamu \nStewart Island / Rakiura  \n(e.g. North Island)")
-                customer_island = (input("What Island in New Zealand are you returning your item from? ")).title()
-        except ValueError:
-            print("Please enter the Islands name with no special characters or numbers (e.g. North Island)")
+    while True: 
+          if customer_island in island_rates:
+               global final_rate
+               final_rate = island_rates[customer_island] * rate
+               print("You are returning an item from {} and it will cost $ {:.2f}".format(customer_island, final_rate))
+               break
+          else:
+                print("Please enter one of the following islands you are returning your item from: \nNorth Island / Te Ika A Maui \nSouth Island / Te Wai Pounamu \nStewart Island / Rakiura  \n(e.g. North Island)")
+                customer_island = (input("What island in New Zealand are you returning your item from? ")).title().strip()
+        
 
 #Directory of Islands and rate of shipping from there
-island_rates = {'North Island':1, 'Te Ika a Maui': 1, 'South Island':1.5, 'Te Wai Pounamu':1.5, 'Stewart Island':2, 'Rakiura':2}
+island_rates = {'North Island':1, 'Te Ika A Maui': 1, 'South Island':1.5, 'Te Wai Pounamu':1.5, 'Stewart Island':2, 'Rakiura':2}
 
 
 
@@ -69,9 +66,9 @@ island_rates = {'North Island':1, 'Te Ika a Maui': 1, 'South Island':1.5, 'Te Wa
 #Asks for customers name
 customer_name = input("Hello customer, what is your name? ").title()
 box_dimensions()
-calc_volume(user_height, user_width, user_depth)
+calc_volume(customer_height, customer_width, customer_depth)
 
-#base rates for shipping
+#Base rates for shipping
 if volume <= 6000:
     rate = 8.00
 elif volume > 6000 and volume < 100000:
@@ -83,19 +80,18 @@ else:
 
 
 #Asks what Island is returning item from and total cost of shipping 
-customer_island = (input("Options: \nNorth Island / Te Ika a Maui \nSouth Island / Te Wai Pounamu \nStewart Island / Rakiura \n(We are not accepting returns from other islands yet) \nWhat island in New Zealand are you returning your item from?   ")).title()
+customer_island = (input("Options: \nNorth Island / Te Ika A Maui \nSouth Island / Te Wai Pounamu \nStewart Island / Rakiura \n(We are not accepting returns from other islands yet) \nWhat island in New Zealand are you returning your item from?   ")).title().strip()
 final_cost(customer_island)
 
 #Ask for customer details
 print("Please enter the following details to store in our system")
-customer_lastname = input("What is your lastname? ").title()
-customer_address = input("What is your adress? ").title()
+customer_lastname = input("What is your last name? ").title()
+customer_address = input("What is your address? ").title()
 customer_telephone = input("What is your telephone number? ")
 final_details = [customer_name, customer_lastname, customer_telephone, customer_address, final_rate]
 
 
-#final message with personal details and cost of returning item
-print("Your First Name: {} \nYour Last Name: {} \nYour Telephone Number: {} \nYour address: {} \nYour Return Final Cost: ${:.2f}" .format(final_details[0], final_details[1], final_details[2], final_details[3], final_details[4]))
-
+#Final message with personal details and cost of returning item
+print("Your first name: {} \nYour last name: {} \nYour telephone Number: {} \nYour address: {} \nYour final cost: ${:.2f}" .format(final_details[0], final_details[1], final_details[2], final_details[3], final_details[4]))
 
 
